@@ -8,6 +8,7 @@ import { createClient } from "@/app/utils/supabase/client";
 import { useState } from "react";
 import { z } from "zod";
 import { useAuthStore } from "@/app/_store/userstore";
+import { redirect } from "next/navigation";
 
 // Zod validation
 
@@ -46,6 +47,7 @@ export function LoginComp({
     } else {
       useAuthStore.getState().setUser(data.user);
       console.log("login successful", useAuthStore.getState().user);
+      redirect("../../dashboard");
     }
   }
 
