@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-
+import { ThemeProvider } from "./dashboard/themecomp";
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-manrope",
@@ -19,9 +19,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en " suppressHydrationWarning>
       <body className={`${manrope.variable} font-primary antialiased`}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
