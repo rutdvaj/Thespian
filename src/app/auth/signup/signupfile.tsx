@@ -26,7 +26,7 @@ export function LoginForm({
     if (error) {
       console.log("signup failed", error.message);
     } else {
-      console.log("signup successful", data.user);
+      console.log("signup successfuls", data.user);
       redirect("../../auth/login");
     }
   }
