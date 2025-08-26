@@ -25,6 +25,25 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useAuthStore } from "@/app/_store/userstore";
+import { createClient } from "@/app/utils/supabase/client";
+import { redirect } from "next/navigation";
+
+// Logout
+async function handleLogout(e: React.MouseEvent<HTMLButtonElement>) {
+  e.preventDefault();
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.log("logout failed", error.message);
+  } else {
+    console.log("logout succesfull");
+    useAuthStore.getState().setUser(null);
+    redirect("/auth/login");
+  }
+}
 
 export function NavUser({
   user,
@@ -99,8 +118,10 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <LogOut />
-              Log out
+              <button onClick={handleLogout}>
+                <LogOut />
+                Log out
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
