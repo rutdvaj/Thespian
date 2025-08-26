@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { createClient } from "@/app/utils/supabase/client";
 import { redirect } from "next/navigation";
+import { useAuthStore } from "@/app/_store/userstore";
 
 export function LoginForm({
   className,
@@ -19,14 +20,27 @@ export function LoginForm({
   async function handleSignup(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const supabase = createClient();
-    const { data, error } = await supabase.auth.signUp({
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.signUp({
       email: email,
       password: pass,
     });
     if (error) {
       console.log("signup failed", error.message);
+    }
+    if (user) {
+      // insert profile with default role
+      await supabase.from("profiles").insert({
+        id: user.id, // Include user ID if your profiles table has an id column
+        email: user.email,
+        created_at: new Date().toISOString(), // Format as ISO string
+        role: "user", // default role
+      });
     } else {
-      console.log("signup successfuls", data.user);
+      console.log("signup successful", user);
+      useAuthStore.getState().setUser(user);
       redirect("../../auth/login");
     }
   }
