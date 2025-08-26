@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { createClient } from "@/app/utils/supabase/client";
 import { redirect } from "next/navigation";
+import { useAuthStore } from "@/app/_store/userstore";
 
 export function LoginForm({
   className,
@@ -27,6 +28,7 @@ export function LoginForm({
       console.log("signup failed", error.message);
     } else {
       console.log("signup successful", data.user);
+      useAuthStore.getState().setUser(data.user);
       redirect("../../auth/login");
     }
   }
