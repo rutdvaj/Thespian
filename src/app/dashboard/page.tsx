@@ -14,6 +14,9 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { CarouselSize } from "./carousel";
+import { InputFile } from "../_comps/uploaddocs";
+import { AlertDialog } from "@radix-ui/react-alert-dialog";
+import { AlertDialogDemo } from "../_comps/matud";
 
 export default function Page() {
   return (
@@ -33,15 +36,8 @@ export default function Page() {
             className="mr-2 data-[orientation=vertical]:h-4"
           />
           <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="#">All Inboxes</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator className="hidden md:block" />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Inbox</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
+            {/* <InputFile /> */}
+            <AlertDialogDemo />
           </Breadcrumb>
         </header>
         <div className="flex flex-1 items-center justify-center">
