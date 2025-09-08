@@ -24,7 +24,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { createClient } from "../utils/supabase/client";
-import { useUploadStore } from "../_store/userstore";
+import { useUploadStore } from "../_store/uploadstore";
 
 export function AlertDialogDemo() {
   const [file, setFile] = useState("");
@@ -147,7 +147,7 @@ export function AlertDialogDemo() {
 
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>
+          <AlertDialogAction asChild>
             <Button
               type="submit"
               variant="outline"

@@ -8,6 +8,7 @@ import { createClient } from "@/app/utils/supabase/client";
 import { useState } from "react";
 import { z } from "zod";
 import { useAuthStore } from "@/app/_store/userstore";
+import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 
 // Zod validation
@@ -25,6 +26,7 @@ export function LoginComp({
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const supabase = createClient();
+  const router = useRouter();
 
   // async login handler function
 
@@ -34,24 +36,31 @@ export function LoginComp({
     const result = loginSchema.safeParse({ email, password: pass });
 
     if (!result.success) {
-      console.log("validation failed.");
+      console.log("validation failed.", result.error);
+      return;
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: pass,
-    });
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: pass,
+      });
 
-    if (error) {
-      console.log("login failed", error.message);
-    } else {
-      useAuthStore.getState().setUser(data.user);
-      console.log("login successful", useAuthStore.getState().user);
-      redirect("../../dashboard");
+      if (error) {
+        console.log("login failed", error.message);
+        // Handle error state here
+      } else {
+        // console.log("login successful", data.user);
+        // const userStatus = useAuthStore.getState().setUser(data.user);
+        useAuthStore.getState().setUser(data.user);
+        console.log("Updated user:", useAuthStore.getState().user);
+        // Use router.push instead of redirect for client-side navigation
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
     }
   }
-
-  
 
   // Validate first
 
