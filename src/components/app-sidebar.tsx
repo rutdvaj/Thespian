@@ -16,6 +16,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Switch } from "@/components/ui/switch";
@@ -244,21 +245,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   key={doc.file_path}
                   className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0"
                 >
-                  <div className="flex w-full items-center gap-2">
+                  <div className="flex flex-col w-full items-center gap-2">
                     <span>{doc.file_name}</span>
-                    <span className="ml-auto text-xs">{doc.mime_type}</span>
-                    <Button onClick={() => handleDownload(doc)}>
+                    <Button
+                      className="cursor-pointer"
+                      onClick={() => handleDownload(doc)}
+                    >
                       Download
                     </Button>
                   </div>
-                  <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
-                    Uploaded by: {doc.user_id}
-                  </span>
                 </a>
               ))}
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+        <SidebarFooter>
+          <NavUser user={data.user} />
+        </SidebarFooter>
       </Sidebar>
     </Sidebar>
   );

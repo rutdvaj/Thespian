@@ -38,10 +38,11 @@ export function LoginForm({
         created_at: new Date().toISOString(), // Format as ISO string
         role: "user", // default role
       });
-    } else {
       console.log("signup successful", user);
       useAuthStore.getState().setUser(user);
-      redirect("../../auth/login");
+      redirect("/dashboard");
+    } else {
+      console.log("signup failed");
     }
   }
   return (
@@ -91,8 +92,7 @@ export function LoginForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        Already have an account ? <a href="/auth/login">Login</a>
       </div>
     </div>
   );

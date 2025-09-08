@@ -4,15 +4,20 @@ const tsJestTransformCfg = createDefaultPreset().transform;
 
 /** @type {import("jest").Config} **/
 module.exports = {
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
   transform: {
-    ...tsJestTransformCfg,
+        "^.+\\.(ts|tsx)$": ["ts-jest", { tsconfig: "./tsconfig.json" }],
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"], // 👈 ensures TS files are recognized
   transformIgnorePatterns: ["/node_modules/"], // 👈 makes sure node_modules aren’t skipped incorrectly
   globals: {
     "ts-jest": {
-      tsconfig: "tsconfig.json", // 👈 link to your tsconfig so Jest knows about your TS settings
     },
+  },
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1", // 👈 tells Jest what `@/` means
+  },
+  transform: {
+    "^.+\\.(ts|tsx)$": ["ts-jest", { useESM: true }],
   },
 };
