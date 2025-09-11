@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { createClient } from "../utils/supabase/client";
 import { useUploadStore } from "../_store/uploadstore";
+import { useAuditLogStore } from "../_store/auditstore";
 
 export function AlertDialogDemo() {
   const [file, setFile] = useState("");
@@ -96,6 +97,7 @@ export function AlertDialogDemo() {
           console.error("Metadata insert error:", dbError.message);
         } else {
           console.log("Metadata saved successfully!");
+          useAuditLogStore.getState().toggleRefresh();
         }
       } catch (dbErr) {
         console.error("Unexpected metadata insert error:", dbErr);
