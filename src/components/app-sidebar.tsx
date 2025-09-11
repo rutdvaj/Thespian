@@ -24,6 +24,8 @@ import { ModeToggle } from "@/app/dashboard/dmode";
 import { useState, useEffect } from "react";
 import { createClient } from "@/app/utils/supabase/client";
 import { Button } from "./ui/button";
+import { useAuditLogStore } from "@/app/_store/auditstore";
+import { AuditLogSidebar } from "@/app/_comps/audit";
 
 // This is sample data
 const data = {
@@ -34,34 +36,10 @@ const data = {
   },
   navMain: [
     {
-      title: "Inbox",
+      title: "Audit log",
       url: "#",
       icon: Inbox,
       isActive: true,
-    },
-    {
-      title: "Drafts",
-      url: "#",
-      icon: File,
-      isActive: false,
-    },
-    {
-      title: "Sent",
-      url: "#",
-      icon: Send,
-      isActive: false,
-    },
-    {
-      title: "Junk",
-      url: "#",
-      icon: ArchiveX,
-      isActive: false,
-    },
-    {
-      title: "Trash",
-      url: "#",
-      icon: Trash2,
-      isActive: false,
     },
   ],
   mails: [
@@ -205,6 +183,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         } else {
           setResults(data || []);
           console.log("Search results:", data);
+          useAuditLogStore.getState().toggleRefresh();
         }
       } else {
         setResults([]);
@@ -236,6 +215,42 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarGroupContent className="px-1.5 md:px-0">
+                <SidebarMenu>
+                  {data.navMain.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        tooltip={{
+                          children: item.title,
+                          hidden: false,
+                        }}
+                        onClick={() => {
+                          setActiveItem(item);
+                          const mail = data.mails.sort(
+                            () => Math.random() - 0.5
+                          );
+                          setMails(
+                            mail.slice(
+                              0,
+                              Math.max(5, Math.floor(Math.random() * 10) + 1)
+                            )
+                          );
+                          setOpen(true);
+                        }}
+                        isActive={activeItem?.title === item.title}
+                        className="px-2.5 md:px-2"
+                      >
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup className="px-0">
@@ -259,6 +274,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+        <div>
+          <AuditLogSidebar />
+        </div>
+
         <SidebarFooter>
           <NavUser user={data.user} />
         </SidebarFooter>
