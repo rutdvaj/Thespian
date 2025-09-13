@@ -16,6 +16,8 @@ import {
 import { CarouselSize } from "./carousel";
 import { AlertDialogDemo } from "../_comps/matud";
 import ProtectedRoute from "./pr";
+import Topdetail from "./topdetail";
+import { AuditLogSidebar } from "../_comps/audit";
 export default async function Page() {
   return (
     <ProtectedRoute>
@@ -40,16 +42,9 @@ export default async function Page() {
             </Breadcrumb>
           </header>
           <div className="flex flex-1 items-center justify-center">
-            <CarouselSize />
+            <Topdetail />
           </div>
-          <div className="flex flex-1 flex-col gap-4 p-4">
-            {Array.from({ length: 10 }).map((_, index) => (
-              <div
-                key={index}
-                className=" aspect-video h-12 w-full rounded-lg bg-muted/50"
-              />
-            ))}
-          </div>
+          <AuditLogSidebar />
         </SidebarInset>
       </SidebarProvider>
     </ProtectedRoute>
