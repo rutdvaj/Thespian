@@ -14,7 +14,7 @@
     "module": "commonjs",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "incremental": true,
     "plugins": [
       {
@@ -25,16 +25,17 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "moduleResolution": "node"
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/test/auth.test.ts"
-, "src/app/test/feat.test.tsx", 
- ],
+    "src/app/test/auth.test.ts",
+    "src/app/test/feat.test.tsx"
+  ],
   "exclude": [
     "node_modules"
   ]
