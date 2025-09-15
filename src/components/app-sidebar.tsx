@@ -218,7 +218,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarContent>
             <SidebarGroup>
               <SidebarGroupContent className="px-1.5 md:px-0">
-                <SidebarMenu>
+                {/* <SidebarMenu>
                   {data.navMain.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
@@ -247,7 +247,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
-                </SidebarMenu>
+                </SidebarMenu> */}
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
@@ -274,9 +274,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-        <div>
-          <AuditLogSidebar />
-        </div>
 
         <SidebarFooter>
           <NavUser user={data.user} />

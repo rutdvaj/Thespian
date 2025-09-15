@@ -9,7 +9,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Zentra Fleet Dashboard",
+  title: "Thespian",
   description: "Fleet logistics made simple.",
 };
 
